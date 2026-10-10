@@ -6,7 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RadioTest {
 
-    // ===== ТЕСТЫ НА СТАНЦИИ =====
+    // ===== ТЕСТЫ НА СТАНЦИИ (по умолчанию 10) =====
+
+    @Test
+    public void testDefaultStationsCount() {
+        Radio radio = new Radio();
+        assertEquals(10, radio.getStationsCount());
+    }
 
     @Test
     public void testSetStation() {
@@ -75,6 +81,45 @@ public class RadioTest {
         radio.setCurrentStation(0);
         radio.prev();
         assertEquals(9, radio.getCurrentStation());
+    }
+
+    // ===== ТЕСТЫ НА КАСТОМНОЕ КОЛИЧЕСТВО СТАНЦИЙ =====
+
+    @Test
+    public void testCustomStationsCount() {
+        Radio radio = new Radio(30);
+        assertEquals(30, radio.getStationsCount());
+    }
+
+    @Test
+    public void testSetStationForCustomCount() {
+        Radio radio = new Radio(30);
+        radio.setCurrentStation(29);
+        assertEquals(29, radio.getCurrentStation());
+    }
+
+    @Test
+    public void testSetStationAboveCustomCount() {
+        Radio radio = new Radio(30);
+        radio.setCurrentStation(5);
+        radio.setCurrentStation(30);
+        assertEquals(5, radio.getCurrentStation());
+    }
+
+    @Test
+    public void testNextFromMaxForCustomCount() {
+        Radio radio = new Radio(30);
+        radio.setCurrentStation(29);
+        radio.next();
+        assertEquals(0, radio.getCurrentStation());
+    }
+
+    @Test
+    public void testPrevFromZeroForCustomCount() {
+        Radio radio = new Radio(30);
+        radio.setCurrentStation(0);
+        radio.prev();
+        assertEquals(29, radio.getCurrentStation());
     }
 
     // ===== ТЕСТЫ НА ГРОМКОСТЬ =====
