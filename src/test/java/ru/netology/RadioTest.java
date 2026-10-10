@@ -1,95 +1,128 @@
 package ru.netology;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RadioTest {
 
+    // ===== ТЕСТЫ НА СТАНЦИИ =====
+
     @Test
-    void shouldSetValidStation() {
+    public void testSetStation() {
         Radio radio = new Radio();
         radio.setCurrentStation(5);
-        Assertions.assertEquals(5, radio.getCurrentStation());
+        assertEquals(5, radio.getCurrentStation());
     }
 
     @Test
-    void shouldNotSetStationBelowZero() {
+    public void testSetStationBelowZero() {
         Radio radio = new Radio();
         radio.setCurrentStation(5);
         radio.setCurrentStation(-1);
-        Assertions.assertEquals(5, radio.getCurrentStation());
+        assertEquals(5, radio.getCurrentStation());
     }
 
     @Test
-    void shouldNotSetStationAboveNine() {
+    public void testSetStationAboveNine() {
         Radio radio = new Radio();
         radio.setCurrentStation(5);
         radio.setCurrentStation(10);
-        Assertions.assertEquals(5, radio.getCurrentStation());
+        assertEquals(5, radio.getCurrentStation());
     }
 
     @Test
-    void shouldGoToNextStation() {
+    public void testSetStationZero() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(0);
+        assertEquals(0, radio.getCurrentStation());
+    }
+
+    @Test
+    public void testSetStationNine() {
+        Radio radio = new Radio();
+        radio.setCurrentStation(9);
+        assertEquals(9, radio.getCurrentStation());
+    }
+
+    @Test
+    public void testNextStation() {
         Radio radio = new Radio();
         radio.setCurrentStation(5);
         radio.next();
-        Assertions.assertEquals(6, radio.getCurrentStation());
+        assertEquals(6, radio.getCurrentStation());
     }
 
     @Test
-    void shouldWrapFromNineToZero() {
+    public void testNextStationFromNine() {
         Radio radio = new Radio();
         radio.setCurrentStation(9);
         radio.next();
-        Assertions.assertEquals(0, radio.getCurrentStation());
+        assertEquals(0, radio.getCurrentStation());
     }
 
     @Test
-    void shouldGoToPrevStation() {
+    public void testPrevStation() {
         Radio radio = new Radio();
         radio.setCurrentStation(5);
         radio.prev();
-        Assertions.assertEquals(4, radio.getCurrentStation());
+        assertEquals(4, radio.getCurrentStation());
     }
 
     @Test
-    void shouldWrapFromZeroToNine() {
+    public void testPrevStationFromZero() {
         Radio radio = new Radio();
         radio.setCurrentStation(0);
         radio.prev();
-        Assertions.assertEquals(9, radio.getCurrentStation());
+        assertEquals(9, radio.getCurrentStation());
     }
 
+    // ===== ТЕСТЫ НА ГРОМКОСТЬ =====
+
     @Test
-    void shouldIncreaseVolume() {
+    public void testIncreaseVolume() {
         Radio radio = new Radio();
         radio.increaseVolume();
-        Assertions.assertEquals(1, radio.getCurrentVolume());
+        assertEquals(1, radio.getCurrentVolume());
     }
 
     @Test
-    void shouldNotIncreaseVolumeAboveHundred() {
+    public void testIncreaseVolumeFromMax() {
         Radio radio = new Radio();
         for (int i = 0; i < 100; i++) {
             radio.increaseVolume();
         }
+        assertEquals(100, radio.getCurrentVolume());
         radio.increaseVolume();
-        Assertions.assertEquals(100, radio.getCurrentVolume());
+        assertEquals(100, radio.getCurrentVolume());
     }
 
     @Test
-    void shouldDecreaseVolume() {
+    public void testDecreaseVolume() {
         Radio radio = new Radio();
-        radio.increaseVolume();
-        radio.increaseVolume();
+        for (int i = 0; i < 10; i++) {
+            radio.increaseVolume();
+        }
         radio.decreaseVolume();
-        Assertions.assertEquals(1, radio.getCurrentVolume());
+        assertEquals(9, radio.getCurrentVolume());
     }
 
     @Test
-    void shouldNotDecreaseVolumeBelowZero() {
+    public void testDecreaseVolumeFromMin() {
         Radio radio = new Radio();
         radio.decreaseVolume();
-        Assertions.assertEquals(0, radio.getCurrentVolume());
+        assertEquals(0, radio.getCurrentVolume());
+    }
+
+    @Test
+    public void testInitialStationIsZero() {
+        Radio radio = new Radio();
+        assertEquals(0, radio.getCurrentStation());
+    }
+
+    @Test
+    public void testInitialVolumeIsZero() {
+        Radio radio = new Radio();
+        assertEquals(0, radio.getCurrentVolume());
     }
 }
